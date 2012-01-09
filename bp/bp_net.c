@@ -39,6 +39,7 @@ struct BPNet* bp_net_init(int layerCount, int nodesPerLayer) {
 		free(layer);
 		if (!bp_layer_connect(i? &(net->layers[i - 1]) : NULL,&(net->layers[i])))
 			goto err;
+		bp_layer_weights_randomize(&(net->layers[i]),BP_NODE_WEIGHT_ACCURACY);
 	}
 
 	return net;

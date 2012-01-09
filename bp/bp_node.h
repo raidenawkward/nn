@@ -3,6 +3,7 @@
 
 #define BP_NODE_WEIGHT_INIT (0.5)
 #define BP_NODE_WEIGHT_INPUT (1.0)
+#define BP_NODE_WEIGHT_ACCURACY (1000)
 
 
 struct BPNode {

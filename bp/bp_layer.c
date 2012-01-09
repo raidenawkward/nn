@@ -80,10 +80,10 @@ int bp_layer_connect(struct BPLayer* level0, struct BPLayer* level1) {
 	if (!level0) {
 		struct BPNode *node = level1->first;
 		while (node) {
-			node->input_weights = (float*)malloc(sizeof(float) );
+			node->input_weights = (float*)malloc(sizeof(float));
 			if (!node->input_weights)
 				goto err;
-			node->input_weights[0] = BP_NODE_WEIGHT_INIT;
+			node->input_weights[0] = BP_NODE_WEIGHT_INPUT;
 			node->input_count = 1;
 			node = node->next;
 		}
@@ -97,7 +97,7 @@ int bp_layer_connect(struct BPLayer* level0, struct BPLayer* level1) {
 			goto err;
 		int i;
 		for (i = 0; i < level0->node_count; ++i)
-			node->input_weights[i] = BP_NODE_WEIGHT_INPUT;
+			node->input_weights[i] = BP_NODE_WEIGHT_INIT;
 		node->input_count = level0->node_count;
 
 		node = node->next;
@@ -106,4 +106,36 @@ int bp_layer_connect(struct BPLayer* level0, struct BPLayer* level1) {
 	return 1;
 err:
 	return 0;
+}
+
+static float* bp_layer_make_random_array(int length, int accuracy) {
+	float *array = (float*)malloc(sizeof(float) * length);
+	if (!array)
+		return array;
+
+	int i;
+	for (i = 0; i < length; ++i) {
+		array[i] = ((float)(rand() % accuracy)) / accuracy;
+	}
+
+	return array;
+}
+
+void bp_layer_weights_randomize(struct BPLayer* layer, int accuracy) {
+	if (!layer)
+		return;
+
+	struct BPNode *node = layer->first;
+	while (node) {
+		if (node->input_count) {
+			float *rand_array = bp_layer_make_random_array(node->input_count,accuracy);
+			if (!rand_array)
+				return;
+			int i;
+			for (i = 0; i < node->input_count; ++i)
+				node->input_weights[i] = rand_array[i];
+			free(rand_array);
+		}
+		node = node->next;
+	}
 }
