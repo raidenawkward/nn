@@ -11,7 +11,7 @@ struct BPNode {
 	float threshold;
 	float output;
 	// may need function entry for getting real output
-	//
+	float (*get_output) (struct BPNode);
 	struct BPNode *next;
 };
 

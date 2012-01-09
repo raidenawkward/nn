@@ -10,6 +10,7 @@ struct BPNode* bp_node_create() {
 	node->input_count = 0;
 	node->threshold = 0;
 	node->output = 0;
+	node->get_output = NULL;
 	node->next = NULL;
 
 	return node;
@@ -30,6 +31,7 @@ struct BPNode* bp_node_init(float *inputWeight, int inputCount, float threshold,
 	node->input_count = inputCount;
 	node->threshold = threshold;
 	node->output = output;
+	node->get_output = NULL;
 	node->next = NULL;
 
 	return node;
