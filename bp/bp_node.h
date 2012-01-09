@@ -1,6 +1,10 @@
 #ifndef _BP_NODE_H
 #define _BP_NODE_H
 
+#define BP_NODE_WEIGHT_INIT (0.5)
+#define BP_NODE_WEIGHT_INPUT (1.0)
+
+
 struct BPNode {
 	float* input_weights;
 	int	input_count;

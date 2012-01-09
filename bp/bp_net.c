@@ -37,6 +37,8 @@ struct BPNet* bp_net_init(int layerCount, int nodesPerLayer) {
 
 		net->layers[i] = *layer;
 		free(layer);
+		if (!bp_layer_connect(i? &(net->layers[i - 1]) : NULL,&(net->layers[i])))
+			goto err;
 	}
 
 	return net;
@@ -65,6 +67,9 @@ int bp_net_append_layer(struct BPNet* net, struct BPLayer* layer) {
 	}
 
 	net->layers[++ net->layer_count - 1] = *layer;
+	if (!bp_layer_connect(net->layer_count? &(net->layers[net->layer_count - 2]) : NULL,
+		&(net->layers[net->layer_count - 1])))
+		return 0;
 
 	return 1;
 }

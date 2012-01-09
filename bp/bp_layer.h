@@ -17,6 +17,9 @@ struct BPNode* bp_layer_indexed_node(struct BPLayer* layer, int index);
 /// layer destory
 void bp_layer_destory(struct BPLayer* layer);
 /// append node to layer, returns succeed? 1 : 0
-int bp_layer_append(struct BPLayer*layer, struct BPNode* node);
+int bp_layer_append(struct BPLayer* layer, struct BPNode* node);
+/// make 2 layers connected, which weights have not been tetermined
+//	to init weights of input layout, level0 = NULL
+int bp_layer_connect(struct BPLayer* level0, struct BPLayer* level1);
 
 #endif //_BP_LAYER_H
