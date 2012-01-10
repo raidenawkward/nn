@@ -50,7 +50,6 @@ void bp_layer_destory(struct BPLayer* layer) {
 	bp_layer_destory_nodes(layer->first);
 
 	free(layer);
-	layer = NULL;
 }
 
 int bp_layer_append(struct BPLayer* layer, struct BPNode* node) {

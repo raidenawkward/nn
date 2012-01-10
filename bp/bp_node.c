@@ -44,6 +44,5 @@ void bp_node_destory(struct BPNode* node) {
 		free(node->input_weights);
 
 	free(node);
-	node = NULL;
 }
 
