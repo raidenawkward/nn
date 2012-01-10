@@ -18,7 +18,7 @@ static void print_net_info(struct BPNet* net) {
 			printf("node %d (",j);
 			int k;
 			for (k = 0; k < node->input_count; ++k) {
-				printf("%f",node->input_weights[k]);
+				printf("%0.3f",node->input_weights[k]);
 				if (k != node->input_count - 1)
 					printf(",");
 			}
@@ -31,7 +31,7 @@ static void print_net_info(struct BPNet* net) {
 }
 
 int main() {
-	struct BPNet* net = bp_net_init(3,4);
+	struct BPNet* net = bp_net_init(5,3);
 	printf("net inited , count of layer : %d\n",net->layer_count);
 
 	print_net_info(net);
@@ -45,8 +45,7 @@ int main() {
 		return 0;
 	}
 
-	printf("net reinited , count of layer : %d\n",net->layer_count);
-	printf("after loaded\n");
+	printf("\nnet reinited , count of layer : %d\n",net->layer_count);
 	print_net_info(net);
 
 	bp_net_destory(&net);

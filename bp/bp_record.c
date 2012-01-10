@@ -110,6 +110,10 @@ static int bp_record_read_from_file(FILE* fp_net, FILE* fp_layer, FILE* fp_node,
 	if (!fread(*net,sizeof(struct BPNet),1,fp_net))
 		return -1;
 
+	(*net)->layers = (struct BPLayer*)malloc(sizeof(struct BPLayer) * (*net)->layer_count);
+	if (!(*net)->layers)
+		return -1;
+
 	int ret = 0;
 	int i;
 	for (i = 0; i < (*net)->layer_count; ++i) {
