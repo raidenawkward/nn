@@ -3,9 +3,11 @@
 #include "bp_layer.h"
 #include "bp_net.h"
 
-int main() {
-	struct BPNet* net = bp_net_init(3,4);
-	printf("net inited , count of layer : %d\n",net->layer_count);
+static void print_net_info(struct BPNet* net) {
+	if (!net) {
+		printf("empty ptr!\n");
+		return;
+	}
 
 	int i;
 	for (i = 0; i < net->layer_count; ++i) {
@@ -26,6 +28,26 @@ int main() {
 		}
 		printf("\n");
 	}
+}
+
+int main() {
+	struct BPNet* net = bp_net_init(3,4);
+	printf("net inited , count of layer : %d\n",net->layer_count);
+
+	print_net_info(net);
+
+	bp_record_save(net,"./record");
+	sync();
+	bp_net_destory(&net);
+
+	if (bp_record_load("./record",&net) < 0) {
+		printf("failded when loading\n");
+		return 0;
+	}
+
+	printf("net reinited , count of layer : %d\n",net->layer_count);
+	printf("after loaded\n");
+	print_net_info(net);
 
 	bp_net_destory(&net);
 	return 0;
