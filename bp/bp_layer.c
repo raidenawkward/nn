@@ -1,5 +1,6 @@
 #include "bp_layer.h"
 #include <stdlib.h>
+#include <time.h>
 
 struct BPLayer* bp_layer_create() {
 	struct BPLayer* layer = (struct BPLayer*)malloc(sizeof(struct BPLayer));
@@ -114,6 +115,7 @@ static float* bp_layer_make_random_array(int length, int accuracy) {
 		return array;
 
 	int i;
+	srand(time(NULL));
 	for (i = 0; i < length; ++i) {
 		array[i] = ((float)(rand() % accuracy)) / accuracy;
 	}
