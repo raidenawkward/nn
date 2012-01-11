@@ -1,13 +1,14 @@
 #ifndef _BP_NODE_H
 #define _BP_NODE_H
 
+#define BP_NODE_WEIGHT_MAX 10
 #define BP_NODE_WEIGHT_INIT (0.5)
 #define BP_NODE_WEIGHT_INPUT (1.0)
 #define BP_NODE_WEIGHT_ACCURACY (1000)
 
 
 struct BPNode {
-	float* input_weights;
+	float input_weights[BP_NODE_WEIGHT_MAX];
 	int	input_count;
 	float threshold;
 	float output;

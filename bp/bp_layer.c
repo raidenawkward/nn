@@ -1,6 +1,7 @@
 #include "bp_layer.h"
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 struct BPLayer* bp_layer_create() {
 	struct BPLayer* layer = (struct BPLayer*)malloc(sizeof(struct BPLayer));
@@ -81,9 +82,7 @@ int bp_layer_connect(struct BPLayer* level0, struct BPLayer* level1) {
 	if (!level0) {
 		struct BPNode *node = level1->first;
 		while (node) {
-			node->input_weights = (float*)malloc(sizeof(float));
-			if (!node->input_weights)
-				goto err;
+			memset(node->input_weights,0x00,BP_NODE_WEIGHT_MAX);
 			node->input_weights[0] = BP_NODE_WEIGHT_INPUT;
 			node->input_count = 1;
 			node = node->next;
@@ -93,9 +92,9 @@ int bp_layer_connect(struct BPLayer* level0, struct BPLayer* level1) {
 
 	struct BPNode* node = level1->first;
 	while (node) {
-		node->input_weights = (float*)malloc(sizeof(float) * level0->node_count);
-		if (!node->input_weights)
+		if (node->input_count >= BP_NODE_WEIGHT_MAX)
 			goto err;
+		memset(node->input_weights,0x00,BP_NODE_WEIGHT_MAX);
 		int i;
 		for (i = 0; i < level0->node_count; ++i)
 			node->input_weights[i] = BP_NODE_WEIGHT_INIT;

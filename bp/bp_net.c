@@ -78,9 +78,10 @@ int bp_net_append_layer(struct BPNet* net, struct BPLayer* layer) {
 void bp_net_destory(struct BPNet** net) {
 	if (!*net || !net)
 		return;
+
 	int i;
 	for (i = 0; i < (*net)->layer_count; ++i) {
-		bp_layer_destory(&(*net)->layers[i]);
+		bp_layer_destory(&((*net)->layers[i]));
 	}
 	free((*net)->layers);
 	free(*net);

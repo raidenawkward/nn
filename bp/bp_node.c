@@ -1,12 +1,13 @@
 #include "bp_node.h"
 #include <stdlib.h>
+#include <string.h>
 
 struct BPNode* bp_node_create() {
 	struct BPNode *node = (struct BPNode*)malloc(sizeof(struct BPNode));
 	if (!node)
 		return node;
 
-	node->input_weights = NULL;
+	memset(node->input_weights,0x00,BP_NODE_WEIGHT_MAX);
 	node->input_count = 0;
 	node->threshold = 0;
 	node->output = 0;
@@ -17,12 +18,14 @@ struct BPNode* bp_node_create() {
 }
 
 struct BPNode* bp_node_init(float *inputWeight, int inputCount, float threshold, float output) {
+	if (inputCount >= BP_NODE_WEIGHT_MAX)
+		return NULL;
 
 	struct BPNode *node = (struct BPNode*)malloc(sizeof(struct BPNode));
 	if (!node)
 		return node;
 
-	node->input_weights = (float*)malloc(sizeof(float) * inputCount);
+	memset(node->input_weights,0x00,BP_NODE_WEIGHT_MAX);
 	int i;
 	for (i = 0; i < inputCount; ++i) {
 		node->input_weights[i] = inputWeight[i];
@@ -41,9 +44,6 @@ struct BPNode* bp_node_init(float *inputWeight, int inputCount, float threshold,
 void bp_node_destory(struct BPNode* node) {
 	if (!node)
 		return;
-
-	if (node->input_weights)
-		free(node->input_weights);
 
 	free(node);
 }
